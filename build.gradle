@@ -1,0 +1,76 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+group = 'com.honeybuns.serverless.api'
+version = '1.0.0-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+    compile(
+            // Amazon AWS
+            'com.amazonaws:aws-lambda-java-events:1.3.0',
+            'com.amazonaws:aws-lambda-java-core:1.1.0',
+            'com.amazonaws:aws-java-sdk-lambda:1.11.125',
+            'com.amazonaws:aws-lambda-java-log4j:1.0.0',
+            'com.amazonaws:aws-java-sdk-sqs:1.11.123',
+            'com.amazonaws:amazon-sqs-java-extended-client-lib:1.0.1',
+
+            // Jackson JSON
+            'com.fasterxml.jackson.core:jackson-core:2.8.5',
+            'com.fasterxml.jackson.core:jackson-databind:2.8.5',
+            'com.fasterxml.jackson.core:jackson-annotations:2.8.5',
+
+            // JSON Schema Validation
+            'com.networknt:json-schema-validator:0.1.7',
+
+            // Common
+            'com.jason-goodwin:better-monads:0.4.0',
+            'joda-time:joda-time',
+            'org.apache.commons:commons-lang3:3.5',
+            'org.apache.commons:commons-collections4:4.1',
+            'com.google.guava:guava:20.0',
+
+            // Lombok
+            'org.projectlombok:lombok:1.16.18'
+    )
+
+    testCompile(
+            'junit:junit:4.12',
+            'org.mockito:mockito-core:2.7.22'
+    )
+}
+
+// Task for building the zip file for upload
+task buildZip(type: Zip) {
+    // Using the Zip API from gradle to build a zip file of all the dependencies
+    //
+    // The path to this zip file can be set in the serverless.yml file for the
+    // package/artifact setting for deployment to the S3 bucket
+    //
+    // Link: https://docs.gradle.org/current/dsl/org.gradle.api.tasks.bundling.Zip.html
+
+    // set the base name of the zip file
+    baseName = "honeybunsapi-serverless"
+    from compileJava
+    from processResources
+    into('lib') {
+        from configurations.runtime
+    }
+}
+
+build.dependsOn buildZip
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.2.1'
+}

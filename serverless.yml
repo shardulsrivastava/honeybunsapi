@@ -1,0 +1,34 @@
+service: honeybunservice
+frameworkVersion: '>=1.2.0 <2.0.0'
+provider:
+  name: aws
+  runtime: java8
+  stage: api #This is the Prefix to the API Gateway URL.Dont change this. URL will look something like this http://<Gateway URL>/api/
+  region: "us-east-1"
+  role: arn:aws:iam::707073652520:role/honeybunservice-role
+  deploymentBucket: serverless-${self:service}-bucket #Name of the bucket Serverless package will be deployed.
+  memorySize: 512 #Memory for Lambda Function -Xmx 512M 
+package:
+  artifact: build/distributions/honeybunsapi-serverless-1.0.0-SNAPSHOT.zip
+functions: #Define Lambda Functions
+  registration:  #Declare a Lambda Function
+    handler: com.honeybuns.serverless.api.registration.RegistrationHandler #Fully Qualified Path of the Handler Class for the function
+    name: serverless-${self:service}-${self:provider.stage}-registration #Lambda Function Name
+    deadLetter:
+      targetArn: arn:aws:sns:us-east-1:707073652520:serverless-honeybunservice-error-topic //Dead Letter Queue ARM for Lambda Errors.
+    events: #Events to invoke this lambda function such as SNS,SQS,HTTP
+    - http: #Invoke this lambda function via HTTP.
+        path: register #this is the API Path you want to define.URL will look something like this http://<Gateway URL>/api/register
+        method: post # HTTP Method to invoke.
+        cors: true # Enable CORS on the API Gateway.
+  login:
+    handler: com.honeybuns.serverless.api.registration.LoginHandler
+    name: serverless-${self:service}-${self:provider.stage}-login
+    deadLetter:
+      targetArn: arn:aws:sns:us-east-1:707073652520:serverless-honeybunservice-error-topic
+    events:
+    - http:
+        path: login
+        method: post
+plugins:
+  - serverless-plugin-lambda-dead-letter
