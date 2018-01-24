@@ -6,10 +6,13 @@ package com.honeybuns.serverless.api.model;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+import lombok.ToString;
+
 /**
  * @author shardulsrivastava
  *
  */
+@ToString()
 public class RegistrationRequest {
 	
 	private String courseName = "";

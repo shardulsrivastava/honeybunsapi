@@ -36,7 +36,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-honeybunservice-bucket",
-                "S3Key": "serverless/honeybunservice/api/1516758919950-2018-01-24T01:55:19.950Z/honeybunsapi-serverless-1.0.0-SNAPSHOT.zip"
+                "S3Key": "serverless/honeybunservice/api/1516769331510-2018-01-24T04:48:51.510Z/honeybunsapi-serverless-1.0.0-SNAPSHOT.zip"
               },
               "FunctionName": "serverless-honeybunservice-api-registration",
               "Handler": "com.honeybuns.serverless.api.handler.RegistrationHandler",
@@ -49,14 +49,14 @@
               "RegistrationLogGroup"
             ]
           },
-          "RegistrationLambdaVersionjxMqaiaZkMirEWjTDHyPFkd2ejxfaIKGmKU26Pvo4": {
+          "RegistrationLambdaVersionI7cu2yDMz3eCqvI2yKLaKnstCiGQEHJC9SNWDd1wdE8": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "RegistrationLambdaFunction"
               },
-              "CodeSha256": "CwcV3sBlHfLiPoOIB3QMnbwF7vHdWqM9RP+7KvTPcFs="
+              "CodeSha256": "xhSD74bo5O8HDhzdGVCvs9rknVa9XdqETSl6plaVNA4="
             }
           },
           "LoginLambdaFunction": {
@@ -64,7 +64,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-honeybunservice-bucket",
-                "S3Key": "serverless/honeybunservice/api/1516758919950-2018-01-24T01:55:19.950Z/honeybunsapi-serverless-1.0.0-SNAPSHOT.zip"
+                "S3Key": "serverless/honeybunservice/api/1516769331510-2018-01-24T04:48:51.510Z/honeybunsapi-serverless-1.0.0-SNAPSHOT.zip"
               },
               "FunctionName": "serverless-honeybunservice-api-login",
               "Handler": "com.honeybuns.serverless.api.handler.LoginHandler",
@@ -77,14 +77,14 @@
               "LoginLogGroup"
             ]
           },
-          "LoginLambdaVersion7gXxsw5KkZoSiJQmrroHzNG5fDf44uPWjrhx0UaKt4": {
+          "LoginLambdaVersionzPLJWt9iix00whuUAdZgdaWZbz1GEyiOkbncKUJY": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "LoginLambdaFunction"
               },
-              "CodeSha256": "CwcV3sBlHfLiPoOIB3QMnbwF7vHdWqM9RP+7KvTPcFs="
+              "CodeSha256": "xhSD74bo5O8HDhzdGVCvs9rknVa9XdqETSl6plaVNA4="
             }
           },
           "ApiGatewayRestApi": {
@@ -174,6 +174,52 @@
               }
             }
           },
+          "ApiGatewayMethodLoginOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true,
+                    "method.response.header.Access-Control-Allow-Credentials": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'",
+                      "method.response.header.Access-Control-Allow-Credentials": "'false'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": ""
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceLogin"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
           "ApiGatewayMethodRegisterPost": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
@@ -252,7 +298,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1516758920357": {
+          "ApiGatewayDeployment1516769331899": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -339,13 +385,13 @@
           "RegistrationLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "RegistrationLambdaVersionjxMqaiaZkMirEWjTDHyPFkd2ejxfaIKGmKU26Pvo4"
+              "Ref": "RegistrationLambdaVersionI7cu2yDMz3eCqvI2yKLaKnstCiGQEHJC9SNWDd1wdE8"
             }
           },
           "LoginLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "LoginLambdaVersion7gXxsw5KkZoSiJQmrroHzNG5fDf44uPWjrhx0UaKt4"
+              "Ref": "LoginLambdaVersionzPLJWt9iix00whuUAdZgdaWZbz1GEyiOkbncKUJY"
             }
           },
           "ServiceEndpoint": {
@@ -410,6 +456,25 @@
             "http": {
               "path": "login",
               "method": "post",
+              "cors": {
+                "origins": [
+                  "*"
+                ],
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "POST"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent"
+                ],
+                "allowCredentials": false
+              },
               "integration": "AWS_PROXY"
             }
           }
@@ -420,7 +485,7 @@
     }
   },
   "package": {
-    "artifactDirectoryName": "serverless/honeybunservice/api/1516758919950-2018-01-24T01:55:19.950Z",
+    "artifactDirectoryName": "serverless/honeybunservice/api/1516769331510-2018-01-24T04:48:51.510Z",
     "artifact": "honeybunsapi-serverless-1.0.0-SNAPSHOT.zip"
   }
 }

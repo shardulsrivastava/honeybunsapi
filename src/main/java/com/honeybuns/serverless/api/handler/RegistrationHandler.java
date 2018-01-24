@@ -30,6 +30,7 @@ public class RegistrationHandler implements RequestHandler<RegistrationRequest, 
 			if (getApplicationContext() != null) {
 				RegistrationService registrationService = getApplicationContext().getBean(RegistrationService.class);
 				if (registrationService != null) {
+					LOGGER.debug(input.toString());
 					result = registrationService.register();
 				} else {
 					LOGGER.debug("RegistrationService Bean didn't load properly");
