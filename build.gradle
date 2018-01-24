@@ -3,7 +3,7 @@ buildscript {
 		mavenCentral()
 	}
 }
-
+    
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
@@ -25,6 +25,10 @@ dependencies {
             'com.amazonaws:aws-lambda-java-log4j:1.0.0',
             'com.amazonaws:aws-java-sdk-sqs:1.11.123',
             'com.amazonaws:amazon-sqs-java-extended-client-lib:1.0.1',
+            
+            //Spring Library
+            'org.springframework:spring-core:4.2.6.RELEASE',
+            'org.springframework:spring-context:4.2.6.RELEASE',
 
             // Jackson JSON
             'com.fasterxml.jackson.core:jackson-core:2.8.5',
