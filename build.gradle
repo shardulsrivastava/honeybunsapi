@@ -27,8 +27,21 @@ dependencies {
             'com.amazonaws:amazon-sqs-java-extended-client-lib:1.0.1',
             
             //Spring Library
-            'org.springframework:spring-core:4.2.6.RELEASE',
-            'org.springframework:spring-context:4.2.6.RELEASE',
+            'org.springframework:spring-core:5.0.0.RELEASE',
+            'org.springframework:spring-context:5.0.0.RELEASE',
+            'org.springframework:spring-orm:5.0.0.RELEASE',
+            'org.springframework:spring-tx:5.0.0.RELEASE',
+            
+            //Hibernate
+            'org.hibernate:hibernate-core:5.2.9.Final',
+            'org.hibernate:hibernate-entitymanager:5.2.9.Final',
+            
+            //Apache Commons DBCP
+            'org.apache.commons:commons-dbcp2:2.2.0',
+            
+            //Postgre SQL Driver
+            'org.postgresql:postgresql:9.4-1201-jdbc4',
+            
 
             // Jackson JSON
             'com.fasterxml.jackson.core:jackson-core:2.8.5',

@@ -14,32 +14,118 @@
         "LogGroupName": "/aws/lambda/serverless-honeybunservice-api-login"
       }
     },
+    "IamRoleLambdaExecution": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": {
+              "Fn::Join": [
+                "-",
+                [
+                  "api",
+                  "honeybunservice",
+                  "lambda"
+                ]
+              ]
+            },
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogStream"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/serverless-honeybunservice-api-registration:*"
+                    },
+                    {
+                      "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/serverless-honeybunservice-api-login:*"
+                    }
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/serverless-honeybunservice-api-registration:*:*"
+                    },
+                    {
+                      "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/serverless-honeybunservice-api-login:*:*"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "Path": "/",
+        "RoleName": {
+          "Fn::Join": [
+            "-",
+            [
+              "honeybunservice",
+              "api",
+              "us-east-1",
+              "lambdaRole"
+            ]
+          ]
+        }
+      }
+    },
     "RegistrationLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-honeybunservice-bucket",
-          "S3Key": "serverless/honeybunservice/api/1516769331510-2018-01-24T04:48:51.510Z/honeybunsapi-serverless-1.0.0-SNAPSHOT.zip"
+          "S3Key": "serverless/honeybunservice/api/1516790658224-2018-01-24T10:44:18.224Z/honeybunsapi-serverless-1.0.0-SNAPSHOT.zip"
         },
         "FunctionName": "serverless-honeybunservice-api-registration",
         "Handler": "com.honeybuns.serverless.api.handler.RegistrationHandler",
         "MemorySize": 512,
-        "Role": "arn:aws:iam::707073652520:role/honeybunservice-role",
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
         "Runtime": "java8",
         "Timeout": 6
       },
       "DependsOn": [
-        "RegistrationLogGroup"
+        "RegistrationLogGroup",
+        "IamRoleLambdaExecution"
       ]
     },
-    "RegistrationLambdaVersionI7cu2yDMz3eCqvI2yKLaKnstCiGQEHJC9SNWDd1wdE8": {
+    "RegistrationLambdaVersion2yPnhcLYm0FWoA2WGM28fM643a14anINod92YA6wkE": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "RegistrationLambdaFunction"
         },
-        "CodeSha256": "xhSD74bo5O8HDhzdGVCvs9rknVa9XdqETSl6plaVNA4="
+        "CodeSha256": "CeVsqQyuDEIGOnZRHX8QSyycnv9GQwHR9C0rR9WIEeg="
       }
     },
     "LoginLambdaFunction": {
@@ -47,27 +133,33 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-honeybunservice-bucket",
-          "S3Key": "serverless/honeybunservice/api/1516769331510-2018-01-24T04:48:51.510Z/honeybunsapi-serverless-1.0.0-SNAPSHOT.zip"
+          "S3Key": "serverless/honeybunservice/api/1516790658224-2018-01-24T10:44:18.224Z/honeybunsapi-serverless-1.0.0-SNAPSHOT.zip"
         },
         "FunctionName": "serverless-honeybunservice-api-login",
         "Handler": "com.honeybuns.serverless.api.handler.LoginHandler",
         "MemorySize": 512,
-        "Role": "arn:aws:iam::707073652520:role/honeybunservice-role",
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
         "Runtime": "java8",
         "Timeout": 6
       },
       "DependsOn": [
-        "LoginLogGroup"
+        "LoginLogGroup",
+        "IamRoleLambdaExecution"
       ]
     },
-    "LoginLambdaVersionzPLJWt9iix00whuUAdZgdaWZbz1GEyiOkbncKUJY": {
+    "LoginLambdaVersionI0OvHaUd7XOC5m83SqbQimRnTh3sxxXNZ0NZsqxJtYo": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "LoginLambdaFunction"
         },
-        "CodeSha256": "xhSD74bo5O8HDhzdGVCvs9rknVa9XdqETSl6plaVNA4="
+        "CodeSha256": "CeVsqQyuDEIGOnZRHX8QSyycnv9GQwHR9C0rR9WIEeg="
       }
     },
     "ApiGatewayRestApi": {
@@ -281,7 +373,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1516769331899": {
+    "ApiGatewayDeployment1516790659104": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -368,13 +460,13 @@
     "RegistrationLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "RegistrationLambdaVersionI7cu2yDMz3eCqvI2yKLaKnstCiGQEHJC9SNWDd1wdE8"
+        "Ref": "RegistrationLambdaVersion2yPnhcLYm0FWoA2WGM28fM643a14anINod92YA6wkE"
       }
     },
     "LoginLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "LoginLambdaVersionzPLJWt9iix00whuUAdZgdaWZbz1GEyiOkbncKUJY"
+        "Ref": "LoginLambdaVersionI0OvHaUd7XOC5m83SqbQimRnTh3sxxXNZ0NZsqxJtYo"
       }
     },
     "ServiceEndpoint": {
