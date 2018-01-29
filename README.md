@@ -16,7 +16,7 @@ Install NPM and then run the below commands .
 
 To configure serverless framework. Run the below commands :
 
-1. serverless config credentials --provider aws --key AKIAJIXKHC43EREDG3BQ --secret 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
+1. `serverless config credentials --provider aws --key AKIAJIXKHC43EREDG3BQ --secret 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`
 
 ---
 # How to setup project
