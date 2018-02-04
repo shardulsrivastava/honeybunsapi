@@ -1,6 +1,8 @@
 .gradle
 /build/
+/gradle/wrapper
 /bin/
+.serverless/
 !gradle/wrapper/gradle-wrapper.jar
 
 ### STS ###
@@ -10,6 +12,8 @@
 .project
 .settings
 .springBeans
+.DS_Store
+
 
 ### IntelliJ IDEA ###
 .idea
