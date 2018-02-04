@@ -56,13 +56,17 @@ public class ApplicationConfiguration {
 	public LocalSessionFactoryBean getSessionFactory() {
 		LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
 		factoryBean.setDataSource(getDataSource());
+		factoryBean.setPackagesToScan("com.honeybuns.serverless.api.entity");
 
 		Properties props = new Properties();
 		props.put("hibernate.show_sql", Boolean.TRUE);
 		props.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQL94Dialect");
 
+		// To Disable loading of Metadata and reduce startup time for Lambda Function.
+		props.put("hibernate.temp.use_jdbc_metadata_defaults", Boolean.FALSE);
+
 		factoryBean.setHibernateProperties(props);
-		factoryBean.setPackagesToScan("com.honeybuns.serverless.api.entity");
+
 		return factoryBean;
 	}
 

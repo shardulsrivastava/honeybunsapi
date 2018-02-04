@@ -11,7 +11,7 @@ import com.honeybuns.serverless.api.model.RegistrationResponse;
  *
  */
 public interface RegistrationService {
-	
-	public RegistrationResponse register(RegistrationRequest registrationRequest);
 
+	public RegistrationResponse register(RegistrationRequest registrationRequest);
+	
 }

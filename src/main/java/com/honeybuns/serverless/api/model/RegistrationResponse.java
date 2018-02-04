@@ -3,10 +3,13 @@
  */
 package com.honeybuns.serverless.api.model;
 
+import lombok.Builder;
+
 /**
  * @author shardulsrivastava
  *
  */
+@Builder
 public class RegistrationResponse {
 
 	private String message;

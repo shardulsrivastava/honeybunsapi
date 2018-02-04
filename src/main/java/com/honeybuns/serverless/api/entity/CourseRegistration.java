@@ -16,7 +16,7 @@ import javax.persistence.Id;
  * @author shardulsrivastava
  *
  */
-@Entity(name = "course_registration")
+@Entity(name = "customer")
 public class CourseRegistration {
 
 	@Id
