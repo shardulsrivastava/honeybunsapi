@@ -76,6 +76,7 @@ public class LoginHandler implements RequestStreamHandler {
 			}
 
 		} catch (Exception pex) {
+			LOGGER.debug("Error While converting input json to Object =>",pex);
 
 		}
 

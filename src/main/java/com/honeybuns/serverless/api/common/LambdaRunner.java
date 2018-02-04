@@ -3,6 +3,9 @@
  */
 package com.honeybuns.serverless.api.common;
 
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+
 /**
  * @author shardulsrivastava
  *
@@ -11,6 +14,7 @@ package com.honeybuns.serverless.api.common;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PipedOutputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -40,7 +44,7 @@ public final class LambdaRunner<I, O> {
 	public static <I, O> void main(final String[] args) throws Exception {
 
 		Context context = ContextUtils.getContext();
-		if (args.length != 1) {
+		if (args.length < 1) {
 			throw new RuntimeException("You should give handler class name as an argument");
 		}
 
@@ -76,8 +80,8 @@ public final class LambdaRunner<I, O> {
 			}
 		} else if (object instanceof RequestStreamHandler) {
 			RequestStreamHandler requestStreamHandler = (RequestStreamHandler) object;
-			InputStream inputStream = null;
-			OutputStream outputStream = null;
+			InputStream inputStream = new FileInputStream(args[1]);
+			OutputStream outputStream = new BufferedOutputStream(new PipedOutputStream());
 
 			try {
 				requestStreamHandler.handleRequest(inputStream, outputStream, context);
